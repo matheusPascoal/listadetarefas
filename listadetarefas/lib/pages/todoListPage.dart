@@ -78,7 +78,14 @@ class _TodoListPageState extends State<TodoListPage> {
               Row(
                 children: [
                   Expanded(child: Text('Você possui 0 tarefas pendentes')),
-                  ElevatedButton(onPressed: () {}, child: Text('Limpar tudo'))
+                  ElevatedButton(
+                      onPressed: () {
+                        String text = todosController.text;
+                        setState(() {
+                          todos.clear();
+                        });
+                      },
+                      child: Text('Limpar tudo'))
                 ],
               )
             ],

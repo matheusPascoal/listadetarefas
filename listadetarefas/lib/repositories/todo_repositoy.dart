@@ -33,4 +33,12 @@ class TodoRepository {
     }
     return <Todo>[];
   }
+
+  removeTodoList(Todo todo) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    List<String>? list_todos = [];
+    list_todos = sharedPreferences.getStringList(todoListKey);
+    list_todos!.remove(json.encode(todo.toJson()));
+    sharedPreferences.setStringList(todoListKey, list_todos);
+  }
 }

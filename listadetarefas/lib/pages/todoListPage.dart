@@ -102,8 +102,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      // ESSE ForIN DIZ QUE QUER AS INFOS DE TAREFA ATE AS TAREFAS
-                      // DE PONTA A PONTA
+                      // ESSE ForIN PEGA UM ELEMENTO DE CADA VEZ
                       for (Todo todo in todos)
                         Row(
                           children: [
@@ -146,7 +145,7 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       todos.remove(todo);
     });
-
+    todoRepository.removeTodoList(todo);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         'Tarefa ${todo.title} foi rmovida com sucesso!',

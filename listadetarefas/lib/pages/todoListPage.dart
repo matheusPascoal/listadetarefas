@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:listadetarefas/models/todo.dart';
+import 'package:listadetarefas/repositories/todo_repositoy.dart';
 import 'package:listadetarefas/widget/TodoListItem.dart';
 
 class TodoListPage extends StatefulWidget {
@@ -12,10 +13,27 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-  TextEditingController todosController = TextEditingController();
+  final TextEditingController todosController = TextEditingController();
+  final TodoRepository todoRepository = TodoRepository();
   List<Todo> todos = [];
   Todo? deletedTodo;
   int? deletedeTodoPos;
+  getList() async {
+    var result = await todoRepository.getTodoList();
+    todos = result;
+    setState(() {});
+  }
+
+  @override
+  initState() {
+    super.initState();
+    getList();
+    // todoRepository.getTodoList().then((value) {
+    //   setState(() {
+    //     todos = value;
+    //   });
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +83,7 @@ class _TodoListPageState extends State<TodoListPage> {
                             todos.add(newTodo);
                           });
                           todosController.clear();
+                          todoRepository.saveTodoList(todos);
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color(0XFF01EEFF),
